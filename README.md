@@ -1,10 +1,7 @@
-# TP0 - Lectura de archivos y parseo de strings
+# Consigna
 
-El objetivo de este trabajo es ir entrando en ritmo con la materia y practicar un poco de C, particularmente lectura de archivos y manejo básico de memoria dinámica.
-
-# Desarrollo
-
-Se provee el archivo **main.c** con la estructura básica de un programa que abre un archivo csv provisto por línea de comandos. El alumno debe completar la implementación de manera tal que el programa funcione correctamente.
+Completar la implementación para que el programa funcione correctamente.
+Se provee el archivo **main.c**
 
 # Estructura del archivo
 
@@ -18,7 +15,7 @@ El archivo a leer tiene un formato como se muestra a continuación:
 5,Jigglypuff,NORM,45,20,20
 ```
 
-Donde la primer columna corresponde a un número identificador, la segunda columna es el nombre del pokemon, luego le sigue el tipo y por último 3 números que representan ataque, defensa y velocidad del pokemon.
+Donde la primer columna es la ID, la segunda columna es el nombre del pokemon, luego le sigue el tipo y por último 3 números que representan ataque, defensa y velocidad del pokemon.
 
 Los tipos válidos son los siguientes:
 
