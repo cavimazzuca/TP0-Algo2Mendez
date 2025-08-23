@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "src/tp0.h"
+#define ERROR -1
 
-int main()
+int main(int argc, char *argv[])
 {
-	char *nombre_archivo =
-		"?????"; //Esto tiene que venir por línea de comando
+	char *nombre_archivo = argv[0];
 
-	FILE *archivo = NULL; //¿Abrir archivo?
+	FILE *archivo = fopen(nombre_archivo, "r");
+	if (archivo == NULL) {
+		return ERROR;
+	}
 
-	char *linea = leer_linea(archivo); //¿Cómo hacemos?
+	// char *linea = leer_linea(archivo); //¿Cómo hacemos?
 
-	struct pokemon *pokemon = parsear_pokemon(linea);
+	// struct pokemon *pokemon = parsear_pokemon(linea);
 
 	//Leer todas las líneas y luego mostrar todos los pokemon por pantalla en orden alfabético
 
