@@ -5,14 +5,23 @@
 
 int main(int argc, char *argv[])
 {
-	char *nombre_archivo = argv[0];
+	if (argc<2) {
+		printf("Se necesita especificar un archivo.\n");
+		return ERROR;
+	}
+	char *nombre_archivo = argv[1];
 
 	FILE *archivo = fopen(nombre_archivo, "r");
 	if (archivo == NULL) {
+		printf("EL archivo %s no existe.\n", argv[1]);
 		return ERROR;
 	}
 
-	// char *linea = leer_linea(archivo); //¿Cómo hacemos?
+	//char* linea = 
+	leer_linea(archivo);
+	//printf("%s\n",linea);
+	//free(linea);
+	fclose(archivo);
 
 	// struct pokemon *pokemon = parsear_pokemon(linea);
 
