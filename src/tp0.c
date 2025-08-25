@@ -36,7 +36,7 @@ char *leer_linea(FILE *archivo)
 	if ((celda_salto = salto_encontrado(linea)) != NULL)
 		*celda_salto = '\0';
 
-	return NULL;
+	return linea;
 }
 
 struct pokemon *parsear_pokemon(char *linea)

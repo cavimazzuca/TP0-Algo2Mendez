@@ -17,11 +17,11 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 
-	//char* linea = 
-	leer_linea(archivo);
+	char* linea = leer_linea(archivo);
 	//printf("%s\n",linea);
 	//free(linea);
 	fclose(archivo);
+	free(linea);
 
 	// struct pokemon *pokemon = parsear_pokemon(linea);
 
