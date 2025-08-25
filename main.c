@@ -17,8 +17,9 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 
-	char* linea = leer_linea(archivo);
-	printf("%s",linea);
+	char *linea = leer_linea(archivo);
+	if (linea != NULL)
+		printf("%s\n",linea);
 
 	// struct pokemon *pokemon = parsear_pokemon(linea);
 
