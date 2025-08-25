@@ -18,14 +18,12 @@ int main(int argc, char *argv[])
 	}
 
 	char* linea = leer_linea(archivo);
-	//printf("%s\n",linea);
-	//free(linea);
-	fclose(archivo);
-	free(linea);
+	printf("%s",linea);
 
 	// struct pokemon *pokemon = parsear_pokemon(linea);
 
 	//Leer todas las líneas y luego mostrar todos los pokemon por pantalla en orden alfabético
-
+	fclose(archivo);
+	free(linea);
 	return 0;
 }
