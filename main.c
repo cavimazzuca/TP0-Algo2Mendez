@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc<2) {
+	if (argc < 2) {
 		printf("Se necesita especificar un archivo.\n");
 		return ERROR;
 	}
@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
 		return ERROR;
 	}
 
-	//size_t chars_pokemon = 1;
 	int i = 0;
 	char *linea = leer_linea(archivo);
 	struct pokemon *pokemon;
@@ -30,7 +29,8 @@ int main(int argc, char *argv[])
 		free(pokemon);
 		i++;
 		linea = leer_linea(archivo);
-		pokes = realloc(pokes, sizeof(struct pokemon)*(i+1));
+		pokes = realloc(pokes,
+				sizeof(struct pokemon) * (size_t)(i + 1));
 	}
 	free(linea);
 
@@ -41,9 +41,6 @@ int main(int argc, char *argv[])
 	for (int j = 0; j < i; j++)
 		free(pokes[j].nombre);
 	free(pokes);
-	
-	
 	fclose(archivo);
-	
 	return 0;
 }

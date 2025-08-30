@@ -25,26 +25,28 @@ char *salto_encontrado(char *linea)
 char *leer_linea(FILE *archivo)
 {
 	size_t tmñ = LETRAS_LEIDAS_POR_ITERACION;
-	char* linea = malloc(tmñ);
+	char *linea = malloc(tmñ);
 	if (linea == NULL)
 		return NULL;
-	if (fgets(linea, tmñ, archivo) == NULL) {
+	if (fgets(linea, (int)tmñ, archivo) == NULL) {
 		free(linea);
 		return NULL;
 	}
-	while (strlen(linea)+1 == tmñ && strstr(linea, "\n") == NULL) {
+	while (strlen(linea) + 1 == tmñ && strstr(linea, "\n") == NULL) {
 		tmñ *= 2;
-		char* nueva_linea = realloc(linea, tmñ);
+		char *nueva_linea = realloc(linea, tmñ);
 		if (nueva_linea == NULL) {
 			free(linea);
 			return NULL;
 		}
 		linea = nueva_linea;
-		fgets(&linea[strlen(linea)], tmñ-strlen(linea), archivo);
+		char *siguiente_linea = &linea[strlen(linea)];
+		siguiente_linea = fgets(siguiente_linea,
+					(int)tmñ - (int)strlen(linea), archivo);
 	}
-	char *ultimo_char = &linea[strlen(linea)-1];
+	char *ultimo_char = &linea[strlen(linea) - 1];
 	if (*ultimo_char == '\n')
-		linea[strlen(linea)-1] = '\0';
+		linea[strlen(linea) - 1] = '\0';
 	return linea;
 }
 
@@ -55,7 +57,7 @@ char *leer_linea(FILE *archivo)
  */
 char *desde_coma(char *string)
 {
-	char* coma = strstr(string, ",");
+	char *coma = strstr(string, ",");
 	if (coma == NULL)
 		return NULL;
 	*coma = '\0';
@@ -65,8 +67,8 @@ char *desde_coma(char *string)
 /*
  * Devuelve el tipo del pokemon ingresado de formato string a formato int según
  * el enum que le corresponde definido en TP0_H_
- */ 
-int texto_a_tipo(char* string)
+ */
+int texto_a_tipo(char *string)
 {
 	if (strcmp(string, TEXTO_ELEC) == 0)
 		return TIPO_ELEC;
@@ -89,24 +91,24 @@ int texto_a_tipo(char* string)
 
 struct pokemon *parsear_pokemon(char *linea)
 {
-	int longitud_linea = strlen(linea);
+	int longitud_linea = (int)strlen(linea) + 1;
 	char linea_stack[longitud_linea];
-	strcpy(linea_stack,linea);
-	
-	char* id = linea_stack;
-	char* nombre = desde_coma(linea_stack);
+	strcpy(linea_stack, linea);
+
+	char *id = linea_stack;
+	char *nombre = desde_coma(linea_stack);
 	if (nombre == NULL)
 		return NULL;
-	char* tipo = desde_coma(nombre);
+	char *tipo = desde_coma(nombre);
 	if (tipo == NULL)
 		return NULL;
-	char* ataque = desde_coma(tipo);
+	char *ataque = desde_coma(tipo);
 	if (ataque == NULL)
 		return NULL;
-	char* defensa = desde_coma(ataque);
+	char *defensa = desde_coma(ataque);
 	if (defensa == NULL)
 		return NULL;
-	char* velocidad = desde_coma(defensa);
+	char *velocidad = desde_coma(defensa);
 	if (velocidad == NULL)
 		return NULL;
 	int tipo_num = texto_a_tipo(tipo);
@@ -123,9 +125,7 @@ struct pokemon *parsear_pokemon(char *linea)
 	pokemon->ataque = atoi(ataque);
 	pokemon->defensa = atoi(defensa);
 	pokemon->velocidad = atoi(velocidad);
-	
-	
-	
+
 	return pokemon;
 }
 
@@ -133,7 +133,7 @@ struct pokemon *parsear_pokemon(char *linea)
  * Dado dos strings, devuelve true si el primero viene primero en el alfabeto.
  * Si no, devuele false.
  */
-bool primero_en_alfabeto(char* primero, char* segundo)
+bool primero_en_alfabeto(char *primero, char *segundo)
 {
 	if (strcmp(primero, segundo) < 0)
 		return true;
@@ -146,7 +146,7 @@ void ordenar_pokemon(struct pokemon *pokemones, int cantidad_pokemones)
 		for (int j = 0; j < cantidad_pokemones - 1; j++) {
 			struct pokemon tmp;
 			char *pokemon = pokemones[j].nombre;
-			char *sig_pokemon = pokemones[j+1].nombre;
+			char *sig_pokemon = pokemones[j + 1].nombre;
 			if (!primero_en_alfabeto(pokemon, sig_pokemon)) {
 				tmp = pokemones[j];
 				pokemones[j] = pokemones[j + 1];
