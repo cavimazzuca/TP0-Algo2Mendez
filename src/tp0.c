@@ -24,6 +24,8 @@ char *salto_encontrado(char *linea)
 
 char *leer_linea(FILE *archivo)
 {
+	if (archivo == NULL)
+		return NULL;
 	size_t tmñ = LETRAS_LEIDAS_POR_ITERACION;
 	char *linea = malloc(tmñ);
 	if (linea == NULL)
@@ -91,6 +93,8 @@ int texto_a_tipo(char *string)
 
 struct pokemon *parsear_pokemon(char *linea)
 {
+	if (linea == NULL)
+		return NULL;
 	int longitud_linea = (int)strlen(linea) + 1;
 	char linea_stack[longitud_linea];
 	strcpy(linea_stack, linea);
@@ -142,6 +146,8 @@ bool primero_en_alfabeto(char *primero, char *segundo)
 
 void ordenar_pokemon(struct pokemon *pokemones, int cantidad_pokemones)
 {
+	if (pokemones == NULL)
+		return;
 	for (int i = 0; i < cantidad_pokemones - i; i++) {
 		for (int j = 0; j < cantidad_pokemones - 1; j++) {
 			struct pokemon tmp;
