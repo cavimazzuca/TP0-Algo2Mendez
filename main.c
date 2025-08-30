@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 	char *linea = leer_linea(archivo);
 	struct pokemon *pokemon;
 	struct pokemon *pokes = malloc(sizeof(struct pokemon));
+	if (pokes == NULL)
+		return ERROR;
 
 	while (linea != NULL) {
 		pokemon = parsear_pokemon(linea);
@@ -29,8 +31,11 @@ int main(int argc, char *argv[])
 		free(pokemon);
 		i++;
 		linea = leer_linea(archivo);
-		pokes = realloc(pokes,
-				sizeof(struct pokemon) * (size_t)(i + 1));
+		struct pokemon *pokes_nuevos = realloc(
+			pokes, sizeof(struct pokemon) * (size_t)(i + 1));
+		if (pokes_nuevos == NULL)
+			return ERROR;
+		pokes = pokes_nuevos;
 	}
 	free(linea);
 
