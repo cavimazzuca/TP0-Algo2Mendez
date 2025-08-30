@@ -148,7 +148,7 @@ void ordenar_pokemon(struct pokemon *pokemones, int cantidad_pokemones)
 {
 	if (pokemones == NULL)
 		return;
-	for (int i = 0; i < cantidad_pokemones - i; i++) {
+	for (int i = 0; i < cantidad_pokemones; i++) {
 		for (int j = 0; j < cantidad_pokemones - 1; j++) {
 			struct pokemon tmp;
 			char *pokemon = pokemones[j].nombre;
