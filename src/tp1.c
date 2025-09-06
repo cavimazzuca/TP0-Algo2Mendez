@@ -1,4 +1,5 @@
-#include "tp0.h"
+#include "tp1.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -13,6 +14,13 @@
 #define TEXTO_LUCH "LUCH"
 #define ERROR -1
 
+struct tp1 {
+	struct pokemon *pokemones;
+	size_t cantidad;
+};
+
+
+
 /*
  * Retorna la posición de 'linea' en donde encuentra el primer '\n'.
  * 'linea' debe ser un string. 
@@ -22,12 +30,17 @@ char *salto_encontrado(char *linea)
 	return strstr(linea, "\n");
 }
 
+
+/*
+ * Devuelve la línea actual del archivo.
+ * Debe ser guardada y posteriormente liberada.
+ */
 char *leer_linea(FILE *archivo)
 {
 	if (archivo == NULL)
 		return NULL;
 	size_t tmñ = LETRAS_LEIDAS_POR_ITERACION;
-	char *linea = malloc(tmñ);
+	char *linea = malloc(tmñ*sizeof(char));
 	if (linea == NULL)
 		return NULL;
 	if (fgets(linea, (int)tmñ, archivo) == NULL) {
@@ -52,6 +65,9 @@ char *leer_linea(FILE *archivo)
 	return linea;
 }
 
+
+
+
 /* 
  * Convierte a la primera coma en el string en '\0' y devuelve un puntero al
  * siguiente carácter.
@@ -68,7 +84,7 @@ char *desde_coma(char *string)
 
 /*
  * Devuelve el tipo del pokemon ingresado de formato string a formato int según
- * el enum que le corresponde definido en TP0_H_
+ * el enum que le corresponde definido en TP1_H_
  */
 int texto_a_tipo(char *string)
 {
@@ -131,6 +147,79 @@ struct pokemon *parsear_pokemon(char *linea)
 	pokemon->velocidad = atoi(velocidad);
 
 	return pokemon;
+}
+
+/*
+ * Añade el pokemon 'pokemon' al vector dinámico del tp1.
+ * En caso de error, no hace nada.
+ */
+void añadir_tp1_dinamico(struct pokemon *pokemon, tp1_t *tp1)
+{
+	struct pokemon *pokes_nuevos = realloc(
+		tp1->pokemones, sizeof(struct pokemon) * (tp1->cantidad + 1));
+	if (pokes_nuevos == NULL)
+		return;
+	tp1->pokemones = pokes_nuevos;
+	tp1->pokemones[tp1->cantidad] = *pokemon;
+	tp1->cantidad++;
+}
+
+tp1_t *tp1_leer_archivo(const char *nombre) {
+	FILE *archivo = fopen(nombre, "r");
+	if (archivo == NULL) 
+		return NULL;
+	struct pokemon *pokemon;
+	tp1_t *tp1 = malloc(sizeof(struct tp1));
+	if (tp1 == NULL) {
+		fclose(archivo);
+		return NULL;
+	}
+	tp1->pokemones = malloc(sizeof(struct pokemon));
+	if (tp1->pokemones == NULL) {
+		fclose(archivo);
+		tp1_destruir(tp1);
+		return NULL;
+	}
+	size_t i = 0;
+	tp1->cantidad = 0;
+	char *linea = leer_linea(archivo);
+	
+	while (linea != NULL) { 
+		pokemon = parsear_pokemon(linea);
+		if (pokemon != NULL) {
+			añadir_tp1_dinamico(pokemon, tp1);
+			if (tp1->cantidad == i) {
+				fclose(archivo);
+				tp1_destruir(tp1);
+				return NULL;
+			}
+			free(linea);
+			free(pokemon);
+			i++;
+		}
+		linea = leer_linea(archivo);
+	}
+	free(linea);
+	if (tp1->cantidad == 0) {
+		fclose(archivo);
+		tp1_destruir(tp1);
+		return NULL;
+	}
+	fclose(archivo);
+	return tp1;
+}
+
+
+void tp1_destruir(tp1_t *tp1)
+{
+	int i = 0;
+	while(tp1->cantidad > 0) {
+		free(tp1->pokemones[i].nombre);
+		i++;
+		if(tp1->cantidad > 0) tp1->cantidad--;
+	}
+	free(tp1->pokemones);
+	free(tp1);
 }
 
 /*

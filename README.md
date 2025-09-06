@@ -1,41 +1,64 @@
-# Consigna
+<div align="right">
+<img width="32px" src="img/algo2.svg">
+</div>
 
-Completar la implementación para que el programa funcione correctamente.
-Se provee el archivo **main.c**
+# TDA LISTA
 
-# Estructura del archivo
+# ESTO ES UN TEMPLATE, COMPLETAR LO QUE HAGA FALTA, ELIMINAR LO QUE SOBRE (INCLUIDA ESTA LÍNEA)
 
-El archivo a leer tiene un formato como se muestra a continuación:
+## Alumno: (Nombre Apellido) - (Padrón) - (Mail)
 
-```csv
-1,Pikachu,ELEC,55,40,90
-2,Charmander,FUEG,52,43,65
-3,Bulbasaur,PLAN,49,49,45
-4,Squirtle,AGUA,48,65,43
-5,Jigglypuff,NORM,45,20,20
+- Para compilar:
+
+```bash
+línea de compilación
 ```
 
-Donde la primer columna es la ID, la segunda columna es el nombre del pokemon, luego le sigue el tipo y por último 3 números que representan ataque, defensa y velocidad del pokemon.
+- Para ejecutar:
 
-Los tipos válidos son los siguientes:
+```bash
+línea de ejecución
+```
 
-| Código | Tipo      |
-|--------|-----------|
-| ELEC   | Eléctrico |
-| FUEG   | Fuego     |
-| PLAN   | Planta    |
-| AGUA   | Agua      |
-| NORM   | Normal    |
-| FANT   | Fantasma  |
-| PSI    | Psíquico  |
-| LUCH   | Lucha     |
+- Para ejecutar con valgrind:
+```bash
+línea con valgrind
+```
 
-# Restricciones
+---
 
-- No se permite el uso de strtok
-- No se permite el uso de qsort
-- No se permite suponer un largo máximo de línea, debe utilizarse memoria dinámica
-- No se permite suponer una cantidad máxima de pokemones
-- El programa no debe dejar memoria sin liberar al finalizar
-- Se deben saltear las líneas erróneas (cantidad de columnas incorrectas por ejemplo)
-- No se permite modificar **tp0.h**
+##  Funcionamiento
+
+Explicación de cómo funcionan las estructuras desarrolladas en el TP y el funcionamiento general del mismo.
+
+Aclarar en esta parte todas las decisiones que se tomaron al realizar el TP, cosas que no se aclaren en el enunciado, fragmentos de código que necesiten explicación extra, etc.
+
+Incluír **EN TODOS LOS TPS** los diagramas relevantes al problema (mayormente diagramas de memoria para explicar las estructuras, pero se pueden utilizar otros diagramas si es necesario).
+
+### Por ejemplo:
+
+El programa funciona abriendo el archivo pasado como parámetro y leyendolo línea por línea. Por cada línea crea un registro e intenta agregarlo al vector. La función de lectura intenta leer todo el archivo o hasta encontrar el primer error. Devuelve un vector con todos los registros creados.
+
+<div align="center">
+<img width="70%" src="img/diagrama1.svg">
+</div>
+
+En el archivo `sarasa.c` la función `funcion1` utiliza `realloc` para agrandar la zona de memoria utilizada para conquistar el mundo. El resultado de `realloc` lo guardo en una variable auxiliar para no perder el puntero original en caso de error:
+
+```c
+int *vector = realloc(vector_original, (n+1)*sizeof(int));
+
+if(vector == NULL)
+    return -1;
+vector_original = vector;
+```
+
+
+<div align="center">
+<img width="70%" src="img/diagrama2.svg">
+</div>
+
+---
+
+## Respuestas a las preguntas teóricas
+Incluír acá las respuestas a las preguntas del enunciado (si aplica).
